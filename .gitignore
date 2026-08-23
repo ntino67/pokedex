@@ -1,0 +1,10 @@
+pokedex
+
+*.test
+
+*.out
+
+go.work
+go.work.sum
+
+.env
