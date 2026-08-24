@@ -1,7 +1,7 @@
 pokedex
 
 *.test
-
+*.log
 *.out
 
 go.work
