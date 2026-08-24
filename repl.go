@@ -4,19 +4,29 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"pokeapi"
 	"strings"
 )
 
 type cliCommand struct {
 	name string
 	description string
-	callback func() error
+	callback func(*config) error
+}
+
+type config struct {
+	registry map[string]cliCommand
+	next *string
+	previous *string
+	pokeApiClient pokeapi.Client
 }
 
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"exit": {name: "exit", description: "Exit the pokedex", callback: commandExit,},
 		"help": {name: "help", description: "Displays a help message", callback: commandHelp,},
+		"map": {name: "map", description: "Displays the next 20 locations", callback: commandMap,},
+		"mapb": {name: "mapb", description: "Displays the previous 20 locations", callback: commandMapBack,},
 	}
 }
 
@@ -25,7 +35,7 @@ func cleanInput(text string) []string {
 	return strings.Fields(s)
 }
 
-func startREPL() {
+func startREPL(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -42,14 +52,14 @@ func startREPL() {
 		}
 
 		command := output[0]
-		commands := getCommands()
 
-		if commands[command].name == "" {
+		cmd, exists := cfg.registry[command]
+		if !exists {
 			fmt.Println("Unknown command")
 			continue
 		}
 
-		if err := commands[command].callback(); err != nil {
+		if err := cmd.callback(cfg); err != nil {
 			fmt.Println("Error:", err)
 		}
 	}
