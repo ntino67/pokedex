@@ -4,29 +4,30 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"pokeapi"
 	"strings"
+
+	"github.com/ntino67/pokedex/internal/pokeapi"
 )
 
 type cliCommand struct {
-	name string
+	name        string
 	description string
-	callback func(*config) error
+	callback    func(*config) error
 }
 
 type config struct {
-	registry map[string]cliCommand
-	next *string
-	previous *string
+	registry      map[string]cliCommand
+	next          *string
+	previous      *string
 	pokeApiClient pokeapi.Client
 }
 
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
-		"exit": {name: "exit", description: "Exit the pokedex", callback: commandExit,},
-		"help": {name: "help", description: "Displays a help message", callback: commandHelp,},
-		"map": {name: "map", description: "Displays the next 20 locations", callback: commandMap,},
-		"mapb": {name: "mapb", description: "Displays the previous 20 locations", callback: commandMapBack,},
+		"exit": {name: "exit", description: "Exit the pokedex", callback: commandExit},
+		"help": {name: "help", description: "Displays a help message", callback: commandHelp},
+		"map":  {name: "map", description: "Displays the next 20 locations", callback: commandMap},
+		"mapb": {name: "mapb", description: "Displays the previous 20 locations", callback: commandMapBack},
 	}
 }
 

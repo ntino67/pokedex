@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func commandMapBack(cfg *config) error {
 	if cfg.previous == nil {
@@ -19,7 +21,5 @@ func commandMapBack(cfg *config) error {
 	for _, location := range locations.Results {
 		fmt.Printf("%s\n", location.Name)
 	}
-
 	return nil
 }
-
