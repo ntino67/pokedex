@@ -12,22 +12,23 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, []string) error
 }
 
 type config struct {
 	registry      map[string]cliCommand
 	next          *string
 	previous      *string
-	pokeApiClient pokeapi.Client
+	pokeApiClient *pokeapi.Client
 }
 
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
-		"exit": {name: "exit", description: "Exit the pokedex", callback: commandExit},
-		"help": {name: "help", description: "Displays a help message", callback: commandHelp},
-		"map":  {name: "map", description: "Displays the next 20 locations", callback: commandMap},
-		"mapb": {name: "mapb", description: "Displays the previous 20 locations", callback: commandMapBack},
+		"exit":    {name: "exit", description: "Exit the pokedex", callback: commandExit},
+		"help":    {name: "help", description: "Displays a help message", callback: commandHelp},
+		"map":     {name: "map", description: "Displays the next 20 locations", callback: commandMap},
+		"mapb":    {name: "mapb", description: "Displays the previous 20 locations", callback: commandMapBack},
+		"explore": {name: "explore", description: "Displays the pokemons in this specific region", callback: commandExplore},
 	}
 }
 
@@ -53,14 +54,15 @@ func startREPL(cfg *config) {
 		}
 
 		command := output[0]
+		args := output[1:]
 
-		cmd, exists := cfg.registry[command]
-		if !exists {
+		cmd, ok := cfg.registry[command]
+		if !ok {
 			fmt.Println("Unknown command")
 			continue
 		}
 
-		if err := cmd.callback(cfg); err != nil {
+		if err := cmd.callback(cfg, args); err != nil {
 			fmt.Println("Error:", err)
 		}
 	}

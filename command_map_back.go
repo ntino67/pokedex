@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func commandMapBack(cfg *config) error {
+func commandMapBack(cfg *config, _ []string) error {
 	if cfg.previous == nil {
 		return fmt.Errorf("no previous locations")
 	}
