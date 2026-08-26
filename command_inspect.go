@@ -9,7 +9,7 @@ func commandInspect(cfg *config, args []string) error {
 		return fmt.Errorf("no arguments provided")
 	}
 	for _, name := range args {
-		pokemon, ok := cfg.pokemon[name]
+		pokemon, ok := cfg.pokedex[name]
 		if !ok {
 			fmt.Printf("The pokemon %s is not in the pokedex...\nTry to catch it!\n", name)
 		}

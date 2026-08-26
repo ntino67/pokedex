@@ -20,7 +20,7 @@ type config struct {
 	next          *string
 	previous      *string
 	pokeApiClient *pokeapi.Client
-	pokemon       map[string]pokeapi.Pokemon
+	pokedex       map[string]pokeapi.Pokemon
 }
 
 func getCommands() map[string]cliCommand {
@@ -32,6 +32,7 @@ func getCommands() map[string]cliCommand {
 		"explore": {name: "explore", description: "Displays the pokemons in this specific region", callback: commandExplore},
 		"catch":   {name: "catch", description: "Catch a pokemon and add it to your pokedex", callback: commandCatch},
 		"inspect": {name: "inspect", description: "Inspect a catched pokemon", callback: commandInspect},
+		"pokedex": {name: "pokedex", description: "Open your pokedex", callback: commandPokedex},
 	}
 }
 
