@@ -23,8 +23,8 @@ func commandCatch(cfg *config, args []string) error {
 			fmt.Printf("%s escaped!\n", name)
 			continue
 		}
-		
-		fmt.Printf("%s was caught!\n", name)
+
+		fmt.Printf("%s was caught!\nYou can now inspect it with the inspect command", name)
 		cfg.pokemon[name] = pokemon
 	}
 
