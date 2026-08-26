@@ -10,6 +10,7 @@ func main() {
 	cfg := &config{
 		registry:      getCommands(),
 		pokeApiClient: pokeapi.NewClient(5*time.Second, 5*time.Second),
+		pokemon: make(map[string]pokeapi.Pokemon),
 	}
 	startREPL(cfg)
 }
